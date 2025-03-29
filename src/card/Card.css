@@ -10,7 +10,7 @@
     display: inline-block;
     
 }
-img{
+.img{
     width:200px;
     height:200px;
     border-radius: 40px;
@@ -30,7 +30,7 @@ img{
     padding: 10px;
     color: rgb(79, 216, 216);
 }
-button{
+.but123{
     padding: 8px;
     border-radius: 10px;
     font-style: italic;

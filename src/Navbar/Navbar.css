@@ -21,6 +21,10 @@
     font-weight: bolder;
     font-style: oblique;
 }
+.logoimg{
+    width:300px;
+    height: 120px;
+}
 
 
 .nav-links {
@@ -35,14 +39,16 @@
 
 .nav-links a {
     text-decoration: none;
-    color: white;
+    color: rgb(42, 110, 2);
     font-size: 1em;
     transition: 0.3s;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .nav-links a:hover {
     text-decoration: underline;
 }
+
 
 
 .menu-btn {
