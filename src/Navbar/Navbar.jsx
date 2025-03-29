@@ -7,7 +7,7 @@ export default function Navbar()
         <>
          
               <nav class="navbar">
-        <div class="logo">My Logo</div>
+        <div class="logo">Yello Pages</div>
         <ul class="nav-links">
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>

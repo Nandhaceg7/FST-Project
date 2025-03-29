@@ -7,7 +7,7 @@ export default function Login()
         <>
         <div class="login-container">
         <h2>Login</h2>
-        <form action="/Create" method="get">
+        <form action="/Check" method="get">
             <div class="input-group">
                 <label for="username">Username</label>
                 <input></input>
@@ -19,8 +19,12 @@ export default function Login()
                
             </div>
             <button type="submit" class="login-btn">Login</button>
-             
-            <h5>Create a New Account ? <a>Click here</a></h5>
+        </form>
+        <br/>
+        <form action="/Create" method="get">
+        <h5>Create a New Account ? </h5>
+        {/* <button className='but'>Click here</button> */}
+        <button>Click here</button>
         </form>
     </div>
     </>
