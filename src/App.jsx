@@ -8,6 +8,8 @@ import Login from './Login/Login'
 import CreateAccount  from "./CreateAccount/CreateAccount";
 import About from "./About/About";
 import Search from "./Search/Search";
+import View from "./View/View"
+import Workspce from "./Workspace/Workspace"
 
 function App() {
   return (
@@ -17,9 +19,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/Create" element={<CreateAccount />} />
-       <Route path="/Check" element={<Search /> } />
-        
-      </Routes>
+        <Route path="/Check" element={<Search /> } />
+        <Route path="/View" element={<View /> } />
+        <Route path="/Add" element={<CreateAccount /> } />
+        <Route path="/Workspace" element={<Workspce /> } />
+     1 </Routes>
       
       <About />
     </Router>
