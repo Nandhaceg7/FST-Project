@@ -33,6 +33,13 @@
       "category": "Electrician",
       "rating": 4.6,
       "reviews": 110
+    },
+    {
+      "name": "David Wilson",
+      "location": "Miami",
+      "category": "Electrician",
+      "rating": 4.6,
+      "reviews": 110
     }
   ]
   
