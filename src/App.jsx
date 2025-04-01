@@ -10,7 +10,7 @@ import About from "./About/About";
 import Search from "./Search/Search";
 import View from "./View/View"
 import Workspce from "./Workspace/Workspace"
-
+import Add from './AddWorkers/Addworker';
 function App() {
   return (
     <Router>
@@ -21,7 +21,7 @@ function App() {
         <Route path="/Create" element={<CreateAccount />} />
         <Route path="/Check" element={<Search /> } />
         <Route path="/View" element={<View /> } />
-        <Route path="/Add" element={<CreateAccount /> } />
+        <Route path="/Add" element={<Add /> } />
         <Route path="/Workspace" element={<Workspce /> } />
      1 </Routes>
       
