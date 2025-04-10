@@ -1,32 +1,59 @@
-import './Login.css'
+import './Login.css';
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from 'react';
 
+export default function Login() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
-export default function Login()
-{
-    return(
-        <>
-        <div class="login-container">
-        <h2>Login</h2>
-        <form action="/Check" method="get">
-            <div class="input-group">
-                <label for="username">Username</label>
-                <input></input>
-             
-            </div>
-            <div class="input-group">
-                <label for="password">Password</label>
-                <input></input>
-               
-            </div>
-            <button type="submit" class="login-btn">Login</button>
-        </form>
-        <br/>
-        <form action="/Create" method="get">
-        <h5>Create a New Account ? </h5>
-        {/* <button className='but'>Click here</button> */}
-        <button>Click here</button>
-        </form>
-    </div>
-    </>
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const res = await fetch('http://localhost:5000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.text();
+        alert(data);
+
+        if (data === "Login Success") {
+            navigate("/home");
+        }
+    };
+
+    return (
+        <div className="login-container">
+            <h2>Login</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="input-group">
+                    <label htmlFor="username">Email</label>
+                    <input
+                        type="email"
+                        id="username"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="input-group">
+                    <label htmlFor="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <button type="submit" className="login-btn">Login</button>
+            </form>
+            <br />
+            <h5>Create a <Link to="/Create">New Account</Link></h5>
+        </div>
     );
 }

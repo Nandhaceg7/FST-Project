@@ -26,7 +26,7 @@ function App() {
         <Route path="/View" element={<View /> } />
         <Route path="/Add" element={<Add /> } />
         <Route path="/Workspace" element={<Workspce /> } />
-     1 </Routes>
+      </Routes>
       
       <About />
     </Router>
