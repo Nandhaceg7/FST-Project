@@ -1,69 +1,99 @@
-import { useState } from 'react';
-import './CreateAccount.css';
+import { useState } from "react";
+import "./CreateAccount.css";
+import axios from "axios";
 
 export default function CreateAccount() {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+  const [formData1, setFormData1] = useState({
+    Username: "",
+    email: "",
+    password: "",
+    confirmpassword: "",
+  });
 
-    const handleSubmit = async (e) => {
-        e.preventDefault(); // prevent form reload
+  // ✅ Handle input changes
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData1((prevData) => ({ ...prevData, [name]: value }));
+  // };
 
-        if (password !== confirmPassword) {
-            alert("Passwords do not match");
-            return;
-        }
+  // ✅ Submit form data to backend
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        try {
-            const response = await fetch('http://localhost:5000/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    name,
-                    email,
-                    password
-                })
-            });
+    if (formData1.password !== formData1.confirmpassword) {
+      alert("Passwords do not match");
+      return;
+    }
 
-            const data = await response.text(); // or use .json() if your backend returns JSON
-            alert(data); // or show a success message on screen
-        } catch (error) {
-            console.error("Error:", error);
-            alert("Registration failed");
-        }
-    };
+    try {
+      const res = await axios.post("http://localhost:5000/api/add", formData1); // ✅ Correct route
+      alert("✅ User added: " + res.data.Username);
+      setFormData1({
+        Username: "",
+        email: "",
+        password: "",
+        confirmpassword: "",
+      });
+    } catch (err) {
+      console.log("❌ Error adding user");
+      console.log(err);
+    }
+  };
 
-    return (
-        <div className="container">
-            <div className="card">
-                <h2>Create Account</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="input-group">
-                        <label htmlFor="name">Full Name</label>
-                        <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} />
-                    </div>
+  return (
+    <div className="container">
+      <div className="card">
+        <h2>Create Account</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <label htmlFor="name">Full Name</label>
+            <input
+              type="text"
+              id="name"
+              name="Username"
+              value={formData1.Username}
+              // onChange={handleChange}
+            />
+          </div>
 
-                    <div className="input-group">
-                        <label htmlFor="email">Email</label>
-                        <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                    </div>
+          <div className="input-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData1.email}
+              // onChange={handleChange}
+            />
+          </div>
 
-                    <div className="input-group">
-                        <label htmlFor="password">Password</label>
-                        <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    </div>
+          <div className="input-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData1.password}
+              // onChange={handleChange}
+            />
+          </div>
 
-                    <div className="input-group">
-                        <label htmlFor="confirm-password">Confirm Password</label>
-                        <input type="password" id="confirm-password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-                    </div>
+          <div className="input-group">
+            <label htmlFor="confirm-password">Confirm Password</label>
+            <input
+              type="password"
+              id="confirm-password"
+              name="confirmpassword"
+              value={formData1.confirmpassword}
+              // onChange={handleChange}
+            />
+          </div>
 
-                    <button type="submit" className="btn">Create Account</button>
-                </form>
-            </div>
-        </div>
-    );
+          <button type="submit"  className="btn">
+            Create Account
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 }

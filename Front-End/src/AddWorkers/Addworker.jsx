@@ -1,45 +1,91 @@
-import './Addworkers.css';
-import { useState } from 'react';
+import React, { useState } from "react";
+import axios from "axios";
 
-export default function Addworkers() {
-    const [name, setName] = useState('');
-    const [role, setRole] = useState('');
+function AddWorker() {
+  const [form, setForm] = useState({
+    name: "",
+    phoneno: "",
+    age: "",
+    categoryOfWork: "",
+    address: "",
+    pincode: "",
+    image: "", // base64 image string
+  });
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-        const res = await fetch('http://localhost:5000/addworker', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, role })
-        });
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
 
-        const data = await res.text();
-        alert(data);
-        setName('');
-        setRole('');
+    reader.onloadend = () => {
+      setForm((prevForm) => ({ ...prevForm, image: reader.result }));
     };
 
-    return (
-        <div className="container">
-            <h2>Worker Management System</h2>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    placeholder="Worker Name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                />
-                <input
-                    type="text"
-                    placeholder="Worker Role"
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                    required
-                />
-                <button type="submit">Add Worker</button>
-            </form>
-        </div>
-    );
+    if (file) {
+      reader.readAsDataURL(file); // convert to base64
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:5000/api/workers", form);
+      alert("Worker added!");
+      setForm({
+        name: "",
+        phoneno: "",
+        age: "",
+        categoryOfWork: "",
+        address: "",
+        pincode: "",
+        image: "",
+      });
+    } catch (err) {
+      alert("Error submitting the form.");
+    }
+  };
+
+  return (
+    <div
+      style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}
+    >
+      <form
+        onSubmit={handleSubmit}
+        style={{ width: "300px", display: "flex", flexDirection: "column" }}
+      >
+        <h2 style={{ textAlign: "center" }}>Add New Workers</h2>
+
+        {["name", "phoneno", "age", "categoryOfWork", "address", "pincode"].map(
+          (key) => (
+            <input
+              key={key}
+              name={key}
+              placeholder={key}
+              value={form[key]}
+              onChange={handleChange}
+              style={{ padding: "10px", marginBottom: "10px" }}
+              required
+            />
+          )
+        )}
+
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          style={{ marginBottom: "10px" }}
+          required
+        />
+
+        <button type="submit" style={{ padding: "10px" }}>
+          Add User
+        </button>
+      </form>
+    </div>
+  );
 }
+
+export default AddWorker;
