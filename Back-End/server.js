@@ -7,7 +7,7 @@ const app = express();
 const PORT = 5000;
 
 // Only one connection
-mongoose.connect('mongodb://127.0.0.1:27017/myapp')
+mongoose.connect("mongodb+srv://nandha:123nandha@cluster0.lqtgmgv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
     .then(() => console.log("Connected to MongoDB"))
     .catch(err => console.error("MongoDB connection error:", err));
 
