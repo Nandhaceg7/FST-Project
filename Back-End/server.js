@@ -1,44 +1,81 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const User = require('./user');
 
 const app = express();
+const PORT = 5000;
+
+// Only one connection
+mongoose.connect('mongodb://127.0.0.1:27017/myapp')
+    .then(() => console.log("Connected to MongoDB"))
+    .catch(err => console.error("MongoDB connection error:", err));
+
 app.use(cors());
-app.use(express.json({ limit: "10mb" })); // Allow big JSON (for base64 image)
+app.use(express.json());
 
-// MongoDB connection
-const MONGO_URI =
-  "mongodb+srv://nandha:123nandha@cluster0.lqtgmgv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-mongoose
-  .connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("✅ MongoDB Connected"))
-  .catch((err) => console.error("MongoDB Error:", err));
-
-// Schema
-const Worker = mongoose.model("Worker", {
-  name: String,
-  phoneno: String,
-  age: String,
-  categoryOfWork: String,
-  address: String,
-  pincode: String,
-  image: String, // store base64 image
+// Worker schema
+const workerSchema = new mongoose.Schema({
+    name: String,
+    role: String
 });
 
-// POST route
-app.post("/api/workers", async (req, res) => {
-  try {
-    const worker = new Worker(req.body);
-    await worker.save();
-    res.status(201).json({ message: "Worker added" });
-  } catch (err) {
-    res.status(500).json({ error: "Something went wrong" });
-  }
+const Worker = mongoose.model('Worker', workerSchema);
+
+// Add worker
+app.post('/addworker', async (req, res) => {
+    const { name, role } = req.body;
+
+    if (!name || !role) {
+        return res.status(400).send('All fields are required');
+    }
+
+    try {
+        const newWorker = new Worker({ name, role });
+        await newWorker.save();
+        res.send(`Worker ${name} added successfully`);
+    } catch (err) {
+        res.status(500).send('Error adding worker');
+    }
 });
 
-app.listen(5000, () =>
-  console.log("🚀 Server running on http://localhost:5000")
-);
+// Login
+app.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user || user.password !== password) {
+        return res.status(401).send("Invalid Credentials");
+    }
+
+    res.send("Login Success");
+});
+
+// Register
+app.post('/register', async (req, res) => {
+    const { name, email, password } = req.body;
+
+    if (!name || !email || !password) {
+        return res.status(400).send("All fields are required");
+    }
+
+    try {
+        const newUser = new User({ name, email, password });
+        await newUser.save();
+        res.send(`Welcome, ${name}!`);
+        console.log("\nName : ", name, "\nEmail : ", email);
+        console.log("User created succcessfully");
+    } catch (err) {
+        if (err.code === 11000) {
+            res.status(400).send("Email already exists");
+        } else {
+            res.status(500).send("Server error");
+        }
+    }
+});
+
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+});
+
+
