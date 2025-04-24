@@ -1,7 +1,7 @@
 import './Search.css'
 // import Workspace from '../Workspace/Workspace';
 import Card from "../card/Card";
-import workers from '../Workers.json';
+import workers from '../../Workers.json';
 import { useState } from 'react';
 
 export default function Search()

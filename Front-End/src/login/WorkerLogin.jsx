@@ -1,4 +1,4 @@
-import './Login.css';
+import './UserLogin.css';
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from 'react';
 
@@ -10,7 +10,7 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const res = await fetch('http://localhost:5000/login', {
+        const res = await fetch('http://localhost:5000/api/workers/login', {  // Update the endpoint here for worker login
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -19,16 +19,18 @@ export default function Login() {
         });
 
         const data = await res.text();
-        alert(data);
 
         if (data === "Login Success") {
-            navigate("/home");
+            alert(data)
+            navigate("/workerHome");
         }
+        else alert(data)
+
     };
 
     return (
         <div className="login-container">
-            <h2>Login</h2>
+            <h2>Worker Login</h2>
             <form onSubmit={handleSubmit}>
                 <div className="input-group">
                     <label htmlFor="username">Email</label>
@@ -53,7 +55,7 @@ export default function Login() {
                 <button type="submit" className="login-btn">Login</button>
             </form>
             <br />
-            <h5>Create a <Link to="/Create">New Account</Link></h5>
+            <h5>Create a <Link to="/createWorker">New Account</Link></h5>
         </div>
     );
 }

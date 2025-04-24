@@ -6,19 +6,26 @@
     font-family: Arial, sans-serif;
 }
 
-
-.login-container {
-    width: 300px;
-    margin: 100px auto;
-    padding: 20px;
+/* Center the card */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     background-color: #f4f4f4;
-    box-shadow: 0px 20px 10px 2px rgba(7, 7, 7, 0.1);
-    border-radius: 10px;
-    text-align: center;
-    
 }
 
+/* Card styling */
+.card {
+    width: 350px;
+    padding: 20px;
+    background: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
 
+/* Form input fields */
 .input-group {
     margin: 10px 0;
     text-align: left;
@@ -28,6 +35,7 @@
     display: block;
     font-size: 14px;
     margin-bottom: 5px;
+    color: #333;
 }
 
 .input-group input {
@@ -37,33 +45,27 @@
     border-radius: 5px;
 }
 
-
-.login-btn {
+/* Button styling */
+.btn {
     width: 100%;
     padding: 10px;
-    margin-top: 10px;
+    margin-top: 15px;
     border: none;
-    background-color: #bd9d11;
+    background-color: #d1b122;
     color: white;
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
-    /* margin-left: 20px; */
 }
 
-.login-btn:hover {
+.btn:hover {
     background-color: #0056b3;
 }
 
-
-/* .but{
-    background-color: rgba(236, 205, 27, 0.753);
-    border-radius: 10px;
-    height:20px;
-    border-width: 1px;
-    padding: 1px;
-    display: inline-block;
-} */
-h5{
- display: inline-block;
+/* Responsive Design */
+@media (max-width: 400px) {
+    .card {
+        width: 90%;
+        padding: 15px;
+    }
 }

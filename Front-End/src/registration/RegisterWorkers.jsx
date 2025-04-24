@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import './CreateAccount.css';
+import './RegisterWorkers.css';
+import { useNavigate } from 'react-router-dom';
 
-export default function CreateAccount() {
+export default function RegisterUsers() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // prevent form reload
@@ -16,7 +19,7 @@ export default function CreateAccount() {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/register', {
+            const response = await fetch('http://localhost:5000/api/workers/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -30,6 +33,7 @@ export default function CreateAccount() {
 
             const data = await response.text(); // or use .json() if your backend returns JSON
             alert(data); // or show a success message on screen
+            navigate("/workerHome")
         } catch (error) {
             console.error("Error:", error);
             alert("Registration failed");

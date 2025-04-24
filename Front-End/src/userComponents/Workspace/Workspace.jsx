@@ -1,5 +1,5 @@
 import Card from "../card/Card";
-import workers from '../Workers.json';
+import workers from '../../Workers.json';
 
 export default function Workspace()
 {
